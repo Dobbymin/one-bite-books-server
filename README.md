@@ -16,7 +16,7 @@ Node.js 22(or 그 이상의 LTS) 이상의 버전이 필요합니다. (25.02.21 
 로컬에서 다음 명령어를 통해 의존성을 모두 설치하세요
 
 ```
-> npm install
+> pnpm install
 ```
 
 ### 3. Supabse 설정하기
@@ -93,7 +93,7 @@ npx prisma db push
 > (참고) 삽입되는 시드 데이터는 프로젝트 `prisma/seed/data.ts` 파일에서 확인할 수 있습니다.
 
 ```
-npm run seed
+pnpm run seed
 ```
 
 ### 6. 서버 실행하기
@@ -101,14 +101,14 @@ npm run seed
 다음 명령어를 통해 프로젝트를 빌드한 다음 서버를 실행합니다.
 
 ```
-> npm run build
-> npm run start
+> pnpm run build
+> pnpm run start
 ```
 
 (참고) 개발모드로 서버를 실행하고 싶다면 다음 명령어를 입력합니다.
 
 ```
-> npm run start:dev
+> pnpm run start:dev
 ```
 
 ### 7. 데이터베이스 실시간 확인하기
@@ -116,15 +116,15 @@ npm run seed
 다음 명령어를 입력하면 데이터베이스를 실시간으로 조회가능한 URL로 접속됩니다.
 
 ```
-npx prisma studio
+pnpm prisma studio
 ```
 
 <img width="1222" alt="image" src="https://github.com/winterlood/onebite-books-server/assets/46296754/5c06d9aa-8f8b-4d9d-9763-9408e1724b13">
 
 ### 8. API 문서 확인하기
 
-다음 주소로 접속하면 Swagger로 제작된 API 문서를 확인하실 수 있습니다.  
-단 서버가 가동중일 때에만 동작하니 꼭 서버를 가동한 뒤 접속해주세요!
+다음 주소로 접속하면 Swagger로 제작된 API 문서를 확인하실 수 있습니다.
+로컬 서버는 가동중일 때에만 동작하니 꼭 서버를 가동한 뒤 접속해주세요!
 
 **http://localhost:12345/api**
 
