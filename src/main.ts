@@ -38,15 +38,7 @@ async function bootstrap() {
     explorer: false,
     customCss: theme.getBuffer(SwaggerThemeNameEnum.ONE_DARK),
   };
-  SwaggerModule.setup(`api`, app, document, {
-    explorer: false,
-    customCss: theme.getBuffer(SwaggerThemeNameEnum.ONE_DARK),
-    customCssUrl: '/swagger/swagger-ui.css',
-    customJs: [
-      '/swagger/swagger-ui-bundle.js',
-      '/swagger/swagger-ui-standalone-preset.js',
-    ],
-  });
+  SwaggerModule.setup(`api/`, app, document, options);
 
   await app.listen(12345);
 }
