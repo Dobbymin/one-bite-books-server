@@ -33,12 +33,18 @@ async function bootstrap() {
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
+
   const theme = new SwaggerTheme();
-  const options = {
+
+  SwaggerModule.setup('api', app, document, {
     explorer: false,
     customCss: theme.getBuffer(SwaggerThemeNameEnum.ONE_DARK),
-  };
-  SwaggerModule.setup(`api`, app, document, options);
+    customCssUrl: ['https://unpkg.com/swagger-ui-dist/swagger-ui.css'],
+    customJs: [
+      'https://unpkg.com/swagger-ui-dist/swagger-ui-bundle.js',
+      'https://unpkg.com/swagger-ui-dist/swagger-ui-standalone-preset.js',
+    ],
+  });
 
   await app.listen(12345);
 }
