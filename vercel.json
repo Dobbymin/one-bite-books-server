@@ -2,6 +2,10 @@
   "version": 2,
   "builds": [
     {
+      "src": "public/**",
+      "use": "@vercel/static"
+    },
+    {
       "src": "dist/src/main.js",
       "use": "@vercel/node",
       "config": {
@@ -10,6 +14,10 @@
     }
   ],
   "routes": [
+    {
+      "src": "/swagger/(.*)",
+      "dest": "/public/swagger/$1"
+    },
     {
       "src": "/(.*)",
       "dest": "dist/src/main.js",
