@@ -28,6 +28,7 @@
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
     "swagger-themes": "^1.4.3",
+    "swagger-ui-dist": "^5.28.1",
     "text": "^0.1.0",
     "validator": "^13.15.15"
   },
