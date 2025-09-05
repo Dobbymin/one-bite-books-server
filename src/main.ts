@@ -1,19 +1,21 @@
 import { ValidationPipe } from '@nestjs/common';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { SwaggerTheme, SwaggerThemeNameEnum } from 'swagger-themes';
+import { join } from 'path';
 import { AppModule } from './app.module';
-
 import { ClassValidatorException } from './util/class-validator-exeption';
 import { PrismaClientExceptionFilter } from './util/prisma-client-exception.filter';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.enableCors();
   app.use((req, res, next) => {
     req.headers['content-type'] = 'application/json';
     next();
   });
+
+  app.useStaticAssets(join(__dirname, '..', 'public'));
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -33,12 +35,14 @@ async function bootstrap() {
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  const theme = new SwaggerTheme();
-  const options = {
-    explorer: false,
-    customCss: theme.getBuffer(SwaggerThemeNameEnum.ONE_DARK),
-  };
-  SwaggerModule.setup(`api`, app, document, options);
+
+  SwaggerModule.setup(`api`, app, document, {
+    customCssUrl: '/swagger/swagger-ui.css',
+    customJs: [
+      '/swagger/swagger-ui-bundle.js',
+      '/swagger/swagger-ui-standalone-preset.js',
+    ],
+  });
 
   await app.listen(12345);
 }
