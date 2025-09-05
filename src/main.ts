@@ -41,6 +41,7 @@ async function bootstrap() {
     customJs: [
       '/swagger/swagger-ui-bundle.js',
       '/swagger/swagger-ui-standalone-preset.js',
+      '/swagger/swagger-ui-init.js',
     ],
   });
 
