@@ -27,47 +27,25 @@ async function bootstrap() {
   const { httpAdapter } = app.get(HttpAdapterHost);
   app.useGlobalFilters(new PrismaClientExceptionFilter(httpAdapter));
 
-  // Swagger 문서 (JSON만)
   const config = new DocumentBuilder()
     .setTitle('ONEBITE BOOKS API')
     .setDescription(`한입 도서몰 API 서버 문서입니다.`)
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-
-  // JSON endpoint → /api-json
-  app.getHttpAdapter().get('/api-json', (req, res) => {
-    res.json(document);
-  });
-
-  // UI endpoint → /api
   const theme = new SwaggerTheme();
-  app.getHttpAdapter().get('/api', (req, res) => {
-    res.send(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>ONEBITE BOOKS API</title>
-          <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist/swagger-ui.css" />
-          <style>${theme.getBuffer(SwaggerThemeNameEnum.ONE_DARK)}</style>
-        </head>
-        <body>
-          <div id="swagger-ui"></div>
-          <script src="https://unpkg.com/swagger-ui-dist/swagger-ui-bundle.js"></script>
-          <script src="https://unpkg.com/swagger-ui-dist/swagger-ui-standalone-preset.js"></script>
-          <script>
-            window.onload = () => {
-              SwaggerUIBundle({
-                url: '/api-json',
-                dom_id: '#swagger-ui',
-                presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
-                layout: "BaseLayout"
-              });
-            };
-          </script>
-        </body>
-      </html>
-    `);
+  const options = {
+    explorer: false,
+    customCss: theme.getBuffer(SwaggerThemeNameEnum.ONE_DARK),
+  };
+  SwaggerModule.setup(`api`, app, document, {
+    explorer: false,
+    customCss: theme.getBuffer(SwaggerThemeNameEnum.ONE_DARK),
+    customCssUrl: '/swagger/swagger-ui.css',
+    customJs: [
+      '/swagger/swagger-ui-bundle.js',
+      '/swagger/swagger-ui-standalone-preset.js',
+    ],
   });
 
   await app.listen(12345);
